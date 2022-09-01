@@ -2,6 +2,8 @@
 
 APP OFICIAL https://nestjs.com/
 
+DOCUMENTACION -- https://docs.nestjs.com/exception-filters
+
 Nest.js CRUD API
 
 # INSTALACION DE NEST GLOBAL
@@ -37,3 +39,4 @@ QUERY PARAMS --- @Query()
 # COMANDOS
 
 1:CREAR CONTROLLER --- nest g co NOMBRECONTROLADOR
+2:CREAR SERVICIO --- nest g s NOMBRESERVICIO
