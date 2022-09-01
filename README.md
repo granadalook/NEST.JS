@@ -8,6 +8,7 @@ Nest.js CRUD API
 2: COMANDO --- npm i -g @nestjs/cli
 3: VERSION --- nest --version
 4: AYUDA --- nest --help
+5: IFORMACION --- nest info
 
 # CREAR NUEVO PROYECTO 
 
