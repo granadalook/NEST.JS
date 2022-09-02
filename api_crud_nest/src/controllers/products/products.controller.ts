@@ -8,9 +8,10 @@ import {
   Param,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
 import { ProductService } from '../../services/product/product.service';
+import { ParseIntExamplePipe } from '../../common/parse-int-example.pipe';
+import { CreateProductDTO, UpdateProductDTO } from './../../DTO/products.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -30,12 +31,12 @@ export class ProductsController {
   }
 
   @Get(':productId')
-  getProduct(@Param('productId') productId: string) {
+  getProduct(@Param('productId', ParseIntExamplePipe) productId: number) {
     /* return { message: `product ${productId}` }; */
-    return this.productService.findOne(parseInt(productId));
+    return this.productService.findOne(productId);
   }
   @Post()
-  create(@Body() body: any) {
+  create(@Body() body: CreateProductDTO) {
     /*   return {
       message: 'retorno mensaje',
       body,
@@ -44,21 +45,24 @@ export class ProductsController {
   }
   @Put(':id')
   @HttpCode(HttpStatus.ACCEPTED)
-  update(@Param('id') id: string, @Body() body: any) {
+  update(
+    @Param('id', ParseIntExamplePipe) id: number,
+    @Body() body: UpdateProductDTO,
+  ) {
     /*   return {
       message: 'actualizar con put',
       id,
       body,
     }; */
 
-    return this.productService.update(parseInt(id), body);
+    return this.productService.update(id, body);
   }
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id', ParseIntExamplePipe) id: number) {
     /*  return {
       message: 'dato eliminado',
       id,
     }; */
-    return this.productService.delete(parseInt(id));
+    return this.productService.delete(id);
   }
 }

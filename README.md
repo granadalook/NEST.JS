@@ -3,6 +3,7 @@
 APP OFICIAL https://nestjs.com/
 
 DOCUMENTACION -- https://docs.nestjs.com/exception-filters
+https://github.com/typestack/class-validator
 
 Nest.js CRUD API
 
@@ -40,3 +41,5 @@ QUERY PARAMS --- @Query()
 
 1:CREAR CONTROLLER --- nest g co NOMBRECONTROLADOR
 2:CREAR SERVICIO --- nest g s NOMBRESERVICIO
+3: CREAR PIPE --- nest g pipe NOMBREPIPE
+3: VALIDACIONES --- npm i class-validator class-transformer --- npm i @nestjs/mapped-types
