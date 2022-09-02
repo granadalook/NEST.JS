@@ -5,6 +5,8 @@ APP OFICIAL https://nestjs.com/
 DOCUMENTACION -- https://docs.nestjs.com/exception-filters
 https://github.com/typestack/class-validator
 
+swager=== https://docs.nestjs.com/openapi/introduction --------- http://localhost:3000/docs#/
+
 Nest.js CRUD API
 
 # INSTALACION DE NEST GLOBAL
@@ -28,14 +30,17 @@ Nest.js CRUD API
 
 # DECORADORES
 
+HTTP-- @Delete()
+HTTP-- @Put()
 HTTP-- @Get()
 HTTP-- @Post()
 HTTP-- @HttpCode
 
 PARAMETROS--- @Param()
 PARAMETROS--- @Body()
-
 QUERY PARAMS --- @Query()
+
+GLOBAL MODULE --- @Global()
 
 # COMANDOS
 
@@ -43,3 +48,4 @@ QUERY PARAMS --- @Query()
 2:CREAR SERVICIO --- nest g s NOMBRESERVICIO
 3: CREAR PIPE --- nest g pipe NOMBREPIPE
 3: VALIDACIONES --- npm i class-validator class-transformer --- npm i @nestjs/mapped-types
+4: CREAR MODULO --- nest g mo users
