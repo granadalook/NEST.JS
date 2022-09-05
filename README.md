@@ -9,6 +9,8 @@ swager=== https://docs.nestjs.com/openapi/introduction --------- http://localhos
 
 Nest.js CRUD API
 
+ORM === object relacional model --- https://typeorm.io/
+
 # INSTALACION DE NEST GLOBAL
 
 1: TENER NODE INSTALADO
@@ -48,4 +50,4 @@ GLOBAL MODULE --- @Global()
 2:CREAR SERVICIO --- nest g s NOMBRESERVICIO
 3: CREAR PIPE --- nest g pipe NOMBREPIPE
 3: VALIDACIONES --- npm i class-validator class-transformer --- npm i @nestjs/mapped-types
-4: CREAR MODULO --- nest g mo users
+4: CREAR MODULO --- nest g mo NOMBRESERVICIO

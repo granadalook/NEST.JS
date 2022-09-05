@@ -36,14 +36,10 @@ export class ProductsController {
   @Get(':productId')
   getProduct(@Param('productId', ParseIntExamplePipe) productId: number) {
     /* return { message: `product ${productId}` }; */
-    return this.productService.findOne(productId);
+    return this.productService.findOnePro(productId);
   }
-  @Post()
+  /*   @Post()
   create(@Body() body: CreateProductsDTO) {
-    /*   return {
-      message: 'retorno mensaje',
-      body,
-    }; */
     return this.productService.create(body);
   }
   @Put(':id')
@@ -52,20 +48,10 @@ export class ProductsController {
     @Param('id', ParseIntExamplePipe) id: number,
     @Body() body: UpdateAuthorDto,
   ) {
-    /*   return {
-      message: 'actualizar con put',
-      id,
-      body,
-    }; */
-
     return this.productService.update(id, body);
   }
   @Delete(':id')
   delete(@Param('id', ParseIntExamplePipe) id: number) {
-    /*  return {
-      message: 'dato eliminado',
-      id,
-    }; */
     return this.productService.delete(id);
-  }
+  } */
 }

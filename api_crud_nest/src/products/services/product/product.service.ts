@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductsDTO, UpdateAuthorDto } from '../../dto/products.dto';
 import { Product } from 'src/products/entities/product.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProductService {
-  private contador = 2;
+  /*   private contador = 2;
   private productos: Product[] = [
     {
       id: 1,
@@ -22,19 +24,23 @@ export class ProductService {
       stock: 1,
       image: 'imagen',
     },
-  ];
+  ]; */
+
+  constructor(
+    @InjectRepository(Product) private productRepo: Repository<Product>,
+  ) {}
 
   findAll() {
-    return this.productos;
+    return this.productRepo.find();
   }
-  findOne(id: number) {
-    const product = this.productos.find((item) => item.id === id);
+  findOnePro(id: number) {
+    const product = this.productRepo.findOneById(id);
     if (!product) {
       throw new NotFoundException(`PRODUCTO DE ID ${id} NO EXISTE`);
     }
     return product;
   }
-  update(id: number, body: UpdateAuthorDto) {
+  /* update(id: number, body: UpdateAuthorDto) {
     const product = this.findOne(id);
     if (!product) {
       throw new NotFoundException(`PRODUCTO DE ID ${id} NO EXIXTE`);
@@ -68,5 +74,5 @@ export class ProductService {
       message: 'PRODUCTO ELIMINADO',
       productDelete,
     };
-  }
+  } */
 }
