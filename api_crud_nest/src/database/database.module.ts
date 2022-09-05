@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'; // importacion de  ORM
 import { Client } from 'pg';
@@ -5,7 +6,7 @@ import { Client } from 'pg';
 const client = new Client({
   user: 'stiven',
   host: 'localhost',
-  database: 'nosejs',
+  database: 'nodejs',
   password: 'admin123',
   port: 5434,
 });
@@ -18,7 +19,7 @@ client.connect();
       type: 'postgres',
       host: 'localhost',
       username: 'stiven',
-      database: 'nosejs',
+      database: 'nodejs',
       password: 'admin123',
       port: 5434,
       synchronize: true,

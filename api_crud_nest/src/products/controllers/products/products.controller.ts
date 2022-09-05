@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
@@ -35,10 +36,9 @@ export class ProductsController {
 
   @Get(':productId')
   getProduct(@Param('productId', ParseIntExamplePipe) productId: number) {
-    /* return { message: `product ${productId}` }; */
     return this.productService.findOnePro(productId);
   }
-  /*   @Post()
+  @Post()
   create(@Body() body: CreateProductsDTO) {
     return this.productService.create(body);
   }
@@ -53,5 +53,5 @@ export class ProductsController {
   @Delete(':id')
   delete(@Param('id', ParseIntExamplePipe) id: number) {
     return this.productService.delete(id);
-  } */
+  }
 }
