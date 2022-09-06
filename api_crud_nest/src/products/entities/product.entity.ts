@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 // eslint-disable-next-line prettier/prettier
 
+
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'; // IMPORTACION
 
 @Entity({ name: 'products' }) // SE DECLARA LA ENTIDAD
