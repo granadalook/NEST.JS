@@ -1,5 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsString, IsNumber, IsUrl } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+  IsUrl,
+  IsPositive,
+} from 'class-validator';
 import { ApiProperty, PartialType, OmitType } from '@nestjs/swagger'; // PONER ESTA IMPORTACION PARA  LOS DTO
 
 export class CreateProductsDTO {
@@ -25,6 +31,11 @@ export class CreateProductsDTO {
   @IsUrl()
   @IsNotEmpty()
   readonly image: string;
+  @ApiProperty({ description: 'RELACION DEL USUARIO' })
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  readonly brandId: number;
 }
 
 export class UpdateAuthorDto extends PartialType(

@@ -4,15 +4,17 @@ import { CreateProductsDTO, UpdateAuthorDto } from '../../dto/products.dto';
 import { Product } from '../../entities/product.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { BrandsService } from '../brands/brands.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product) private productRepo: Repository<Product>,
+    private brandsService: BrandsService,
   ) {}
 
   findAll() {
-    return this.productRepo.find();
+    return this.productRepo.find({ relations: ['brand'] }); // para que me traiga la relacion en el get
   }
   async findOnePro(id: number) {
     const product = await this.productRepo.findOneById(id);
@@ -22,13 +24,21 @@ export class ProductService {
     return product;
   }
 
-  create(body: CreateProductsDTO) {
-      const newProducto = this.productRepo.create(body);
-      return this.productRepo.save(newProducto);
+  async create(body: CreateProductsDTO) {
+    const newProducto = this.productRepo.create(body);
+    if (body.brandId) {
+      const brand = await this.brandsService.findOne(body.brandId);
+      newProducto.brand = brand;
+    }
+    return this.productRepo.save(newProducto);
   }
 
   async update(id: number, body: UpdateAuthorDto) {
     const product = await this.findOnePro(id);
+    if (body.brandId) {
+      const brand = await this.brandsService.findOne(body.brandId);
+      product.brand = brand;
+    }
     if (!product) {
       throw new NotFoundException(`PRODUCTO DE ID ${id} NO EXIXTE`);
     }

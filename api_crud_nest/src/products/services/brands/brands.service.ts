@@ -13,7 +13,13 @@ export class BrandsService {
   }
 
   findOne(id: any) {
-    const product = this.brandsRepo.findOneBy(id);
+    const product = this.brandsRepo.findOne({
+      relations: ['products'],
+      where: {
+        // condición (where) para que busque el Id que enviamos.
+        id,
+      },
+    }); // para que me trauga que datps estan relacionados a esta tabla
     if (!product) {
       throw new NotFoundException(`Brand #${id} not found`);
     }
