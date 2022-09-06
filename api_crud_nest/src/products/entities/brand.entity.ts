@@ -1,35 +1,24 @@
 /* eslint-disable prettier/prettier */
-// eslint-disable-next-line prettier/prettier
-
 import {
+  Entity,
   PrimaryGeneratedColumn,
   Column,
-  Entity,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne, // relacion muchos a uno
+  OneToMany,// relacion uno a muchos
 } from 'typeorm';
 
-import { Brand } from './brand.entity'; // importacion para  relacion
+import { Product } from './product.entity';
 
 @Entity()
-export class Product {
+export class Brand {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', length: 255, unique: true })
   name: string;
 
-  @Column({ type: 'text' })
-  description: string;
-
-  @Column({ type: 'int' })
-  price: number;
-
-  @Column({ type: 'int' })
-  stock: number;
-
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 255 })
   image: string;
 
   @CreateDateColumn({
@@ -44,6 +33,6 @@ export class Product {
   })
   updateAt: Date;
 
-  @ManyToOne(() => Brand, (brand) => brand.products)
-  brand: Brand;
+  @OneToMany(() => Product, (product) => product.brand)
+  products: Product[];
 }

@@ -21,7 +21,7 @@ export class UsersService {
   ) {}
 
   findAll() {
-    return this.userRepo.find({ relations: ['customer'] });
+    return this.userRepo.find({ relations: ['customer'] }); // para que traiga la relacion
   }
 
   async findOne(id: any) {
@@ -37,7 +37,6 @@ export class UsersService {
     if (data.customerId) {
       //  aca validamos   que  viene la relacion
       const customer = await this.customersService.findOne(data.customerId); // con el servicio de customer   asignamos la data
-      console.log('customer', customer);
       newUser.customer = customer;
     }
     return this.userRepo.save(newUser);
