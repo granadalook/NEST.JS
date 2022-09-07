@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  PrimaryGeneratedColumn, //  relacion
+  PrimaryGeneratedColumn,
+  OneToMany, //  relacion
 } from 'typeorm';
+import { Order } from './order.entity';
 
 import { User } from './user.entity'; // a quien vamos a relacionar
 
@@ -38,4 +40,7 @@ export class Customer {
 
   @OneToOne(() => User, (user) => user.customer, { nullable: true }) //  asi se hace la relacion
   user: User; // referencia ..
+
+  @OneToMany(() => Order, (order) => order.customer)
+  orders: Order[];
 }
