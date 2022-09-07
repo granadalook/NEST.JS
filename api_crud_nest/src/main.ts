@@ -16,7 +16,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document); // DOCUMENTAR CON SWAGGER
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transformOptions: { enableImplicitConversion: true }, // convierte todos los query params  a numero  de forma implicita
+    }),
   ); //  asi se activa las validaciones
   app.enableCors(); //  asi se habilitan  todas las cors
   await app.listen(3000); // puerto  en el que  corre la aplicacion

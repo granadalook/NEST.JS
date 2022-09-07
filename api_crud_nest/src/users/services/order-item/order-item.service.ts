@@ -5,10 +5,7 @@ import { Repository } from 'typeorm';
 import { Order } from '../../entities/order.entity';
 import { OrderItem } from '../../entities/order-item.entity';
 import { Product } from '../../../products/entities/product.entity';
-import {
-  CreateOrderItemDto,
-  UpdateOrderItemDto,
-} from '../../dtos/order-item.dto';
+import { CreateOrderItemDto } from '../../dtos/order-item.dto';
 
 @Injectable()
 export class OrderItemService {

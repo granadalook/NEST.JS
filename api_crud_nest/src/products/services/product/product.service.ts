@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateProductsDTO, UpdateAuthorDto } from '../../dto/products.dto';
+import {
+  CreateProductsDTO,
+  FilterProductsDto,
+  UpdateAuthorDto,
+} from '../../dto/products.dto';
 import { Product } from '../../entities/product.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,8 +19,18 @@ export class ProductService {
     @InjectRepository(Category) private categoryRepo: Repository<Category>, //injesciones  derepositorio para hacer gestion directamente en la data //private brandsService: BrandsService,
   ) {}
 
-  findAll() {
-    return this.productRepo.find({ relations: ['brand'] }); // para que me traiga la relacion en el get
+  findAll(params?: FilterProductsDto) {
+    if (params) {
+      const { limit, offset } = params; // deconstruccion de javaScript
+      return this.productRepo.find({
+        relations: ['brand'],
+        take: limit,
+        skip: offset,
+      });
+    }
+    return this.productRepo.find({
+      relations: ['brand'],
+    });
   }
   async findOnePro(id: number) {
     const product = await this.productRepo.findOne({
