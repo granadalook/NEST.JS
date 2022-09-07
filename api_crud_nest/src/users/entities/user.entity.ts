@@ -38,6 +38,6 @@ export class User {
   updateAt: Date;
 
   @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
-  @JoinColumn() // crea la referencia en el momento de la relacion  se ponde  solo en donde   quien va a llevar la relacion
+  @JoinColumn({ name: 'customer_id' }) // crea la referencia en el momento de la relacion  se ponde  solo en donde   quien va a llevar la relacion
   customer: Customer;
 }

@@ -10,14 +10,15 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
-  Index, // relacion muchos a uno
+  Index,
+  JoinColumn, // relacion muchos a uno
 } from 'typeorm';
 
 import { Brand } from './brand.entity'; // importacion para  relacion
 import { Category } from './category.entity';
 
-@Entity()
-@Index(['price', 'stock']) // indexacionde forma conjunta en la mista entidad
+@Entity({ name: 'products' }) // nombrar las tablas en plural y en minuscula
+@Index(['price', 'stock']) // indexacion de forma conjunta en la mista entidad
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -38,21 +39,28 @@ export class Product {
   image: string;
 
   @CreateDateColumn({
+    name: 'create_at', // asi se le da el nombre  para la tabla en la base de datos
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createAt: Date;
 
   @UpdateDateColumn({
+    name: 'update_at', // asi se le da el nombre  para la tabla en la base de datos
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   updateAt: Date;
 
   @ManyToOne(() => Brand, (brand) => brand.products)
+  @JoinColumn({ name: 'brand_id' }) // para poner el nombre de la relacion con las normas de base de datos
   brand: Brand;
 
   @ManyToMany(() => Category, (category) => category.products) // relacion muchos a muchos   bidirecional
-  @JoinTable() //  es para que haga  una tabla intermedia  para la relacion
+  @JoinTable({
+    name: 'products_categories', // nombra la trabla intermedia
+    joinColumn: { name: 'product_id' }, // nombra la columna  de esta enmtidad
+    inverseJoinColumn: { name: 'category_id' }, // nombra la ootra  columna de la otra entidad
+  }) //  es para que haga  una tabla intermedia  para la relacion
   categories: Category[];
 }
