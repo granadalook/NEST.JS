@@ -5,6 +5,7 @@ import {
   IsNumber,
   IsUrl,
   IsPositive,
+  IsArray,
 } from 'class-validator';
 import { ApiProperty, PartialType, OmitType } from '@nestjs/swagger'; // PONER ESTA IMPORTACION PARA  LOS DTO
 
@@ -36,6 +37,10 @@ export class CreateProductsDTO {
   @IsNotEmpty()
   @IsPositive()
   readonly brandId: number;
+  @ApiProperty({ description: 'CATEGORIAS DEL USUARIO' })
+  @IsArray()
+  @IsNotEmpty()
+  readonly categorysIds: number[];
 }
 
 export class UpdateAuthorDto extends PartialType(

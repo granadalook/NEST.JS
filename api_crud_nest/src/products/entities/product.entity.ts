@@ -7,10 +7,13 @@ import {
   Entity,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne, // relacion muchos a uno
+  ManyToOne,
+  ManyToMany,
+  JoinTable, // relacion muchos a uno
 } from 'typeorm';
 
 import { Brand } from './brand.entity'; // importacion para  relacion
+import { Category } from './category.entity';
 
 @Entity()
 export class Product {
@@ -46,4 +49,8 @@ export class Product {
 
   @ManyToOne(() => Brand, (brand) => brand.products)
   brand: Brand;
+
+  @ManyToMany(() => Category, (category) => category.products) // relacion muchos a muchos   bidirecional
+  @JoinTable() //  es para que haga  una tabla intermedia  para la relacion
+  categories: Category[];
 }
