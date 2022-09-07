@@ -24,8 +24,8 @@ export class UsersService {
     return this.userRepo.find({ relations: ['customer'] }); // para que traiga la relacion
   }
 
-  async findOne(id: any) {
-    const user = await this.userRepo.findOneBy(id);
+  async findOne(id: number) {
+    const user = await this.userRepo.findOneBy({id});
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }

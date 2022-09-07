@@ -43,15 +43,30 @@ export class ProductsController {
     return this.productService.create(body);
   }
   @Put(':id')
-  @HttpCode(HttpStatus.ACCEPTED)
+  @HttpCode(HttpStatus.ACCEPTED) //  se pone el codigo de estado que  queramos
   update(
     @Param('id', ParseIntExamplePipe) id: number,
     @Body() body: UpdateAuthorDto,
   ) {
     return this.productService.update(id, body);
   }
+  @Put(':id/category/:categoryId')
+  @HttpCode(HttpStatus.ACCEPTED) //  se pone el codigo de estado que  queramos
+  updateCategories(
+    @Param('id', ParseIntExamplePipe) id: number,
+    @Param('categoryId', ParseIntExamplePipe) categoryId: number, // pasa el Param a un number   estrictamente
+  ) {
+    return this.productService.addCatedoryToProduct(id, categoryId);
+  }
   @Delete(':id')
   delete(@Param('id', ParseIntExamplePipe) id: number) {
     return this.productService.delete(id);
+  }
+  @Delete(':id/category/:categoryId')
+  deleteCategory(
+    @Param('id', ParseIntExamplePipe) id: number, // pasa el Param a un number   estrictamente
+    @Param('categoryId', ParseIntExamplePipe) categoryId: number, // pasa el Param a un number   estrictamente
+  ) {
+    return this.productService.deleteCategoriesByProduct(id, categoryId);
   }
 }

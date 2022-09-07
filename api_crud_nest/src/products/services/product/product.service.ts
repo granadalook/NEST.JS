@@ -52,6 +52,12 @@ export class ProductService {
       const brand = await this.brandsRepo.findOneBy({ id: body.brandId });
       product.brand = brand;
     }
+    if (body.categorysIds) {
+      const categories = await this.categoryRepo.findBy({
+        id: In(body.categorysIds),
+      }); // se manda una serie  de id para que la tabla los devuelva
+      product.categories = categories;
+    }
     if (!product) {
       throw new NotFoundException(`PRODUCTO DE ID ${id} NO EXIXTE`);
     }
@@ -71,9 +77,27 @@ export class ProductService {
       productDelete,
     };
   }
+
+  async deleteCategoriesByProduct(id: number, categoryId: number) {
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: ['categories'],
+    });
+
+    product.categories = product.categories.filter(
+      (item) => item.id !== categoryId,
+    );
+    return this.productRepo.save(product);
+  }
+
+  async addCatedoryToProduct(id: number, categoryId: number) {
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: ['categories'],
+    });
+    const category = await this.categoryRepo.findOneBy({ id: categoryId });
+    product.categories.push(category);
+
+    return this.productRepo.save(product);
+  }
 }
-/*
-
-
-
-  */
