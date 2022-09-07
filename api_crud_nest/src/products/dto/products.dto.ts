@@ -8,6 +8,7 @@ import {
   IsArray,
   IsOptional,
   Min,
+  ValidateIf,
 } from 'class-validator';
 import { ApiProperty, PartialType, OmitType } from '@nestjs/swagger'; // PONER ESTA IMPORTACION PARA  LOS DTO
 
@@ -57,4 +58,12 @@ export class FilterProductsDto {
   @IsOptional()
   @Min(0)
   offset: number;
+
+  @IsOptional()
+  @IsPositive()
+  minPrice: number;
+
+  @ValidateIf((item) => item.minPrice) // DECORADOR  PARA  OBLIGAR QUE  SI PONE MIN PRICE  PONGA EL MAX PRICE
+  @IsPositive()
+  maxPrice: number;
 }

@@ -6,7 +6,7 @@ import {
   UpdateAuthorDto,
 } from '../../dto/products.dto';
 import { Product } from '../../entities/product.entity';
-import { In, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../../entities/category.entity';
 import { Brand } from '../../entities/brand.entity';
@@ -21,9 +21,15 @@ export class ProductService {
 
   findAll(params?: FilterProductsDto) {
     if (params) {
-      const { limit, offset } = params; // deconstruccion de javaScript
+      const where: FindOptionsWhere<Product> = {};
+      const { limit, offset } = params;
+      const { maxPrice, minPrice } = params;
+      if (minPrice && maxPrice) {
+        where.price = Between(minPrice, maxPrice);
+      }
       return this.productRepo.find({
         relations: ['brand'],
+        where,
         take: limit,
         skip: offset,
       });
