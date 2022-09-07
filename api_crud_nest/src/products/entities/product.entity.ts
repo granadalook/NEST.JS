@@ -9,13 +9,15 @@ import {
   UpdateDateColumn,
   ManyToOne,
   ManyToMany,
-  JoinTable, // relacion muchos a uno
+  JoinTable,
+  Index, // relacion muchos a uno
 } from 'typeorm';
 
 import { Brand } from './brand.entity'; // importacion para  relacion
 import { Category } from './category.entity';
 
 @Entity()
+@Index(['price', 'stock']) // indexacionde forma conjunta en la mista entidad
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,7 +27,7 @@ export class Product {
 
   @Column({ type: 'text' })
   description: string;
-
+  @Index() // para hacer indexacion y hacer las busquedas mas rapidas
   @Column({ type: 'int' })
   price: number;
 
