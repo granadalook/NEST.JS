@@ -4,10 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm'; // importacion de  ORM
 import { Client } from 'pg';
 // Para conectarse a la base de datos
 const client = new Client({
-  user: 'stiven', //stiven
+  user: 'granada', //stiven
   host: 'localhost',
-  database: 'nodejs', //nodejs
-  password: 'admin123', //admin123
+  database: 'nestjs', //nodejs
+  password: 'grana123', //admin123
   port: 5434, //5434
 });
 client.connect();
@@ -18,11 +18,11 @@ client.connect();
       // creacion del modulo 👈 entity
       type: 'postgres', //postgres
       host: 'localhost',
-      username: 'stiven', //stiven
-      database: 'nodejs', //nodejs
-      password: 'admin123', //admin123
+      username: 'granada', //stiven
+      database: 'nestjs', //nodejs
+      password: 'grana123', //admin123
       port: 5434, //5434
-      synchronize: true,  // sincronizacion hacia la tabla  automatica
+      synchronize: true, // sincronizacion hacia la tabla  automatica
       autoLoadEntities: true,
     }),
   ],

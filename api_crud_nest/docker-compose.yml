@@ -4,20 +4,10 @@ services:
   postgres:
     image: postgres:13
     environment:
-      POSTGRES_DB: nodejs
-      POSTGRES_USER: stiven
-      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: nestjs
+      POSTGRES_USER: granada
+      POSTGRES_PASSWORD: grana123
     ports:
       - 5434:5432
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
-
-  mysql:
-    image: mysql:5
-    environment:
-      MYSQL_DATABASE: my_db
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - '3306:3306'
-    volumes:
-      - ./mysql_data:/var/lib/mysql
