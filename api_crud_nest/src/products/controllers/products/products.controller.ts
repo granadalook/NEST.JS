@@ -37,14 +37,17 @@ export class ProductsController {
   }
 
   @Get(':productId')
+  @ApiOperation({ summary: 'TRAE PRODUCTOS POR ID' })
   getProduct(@Param('productId', ParseIntExamplePipe) productId: number) {
     return this.productService.findOnePro(productId);
   }
   @Post()
+  @ApiOperation({ summary: 'CREAR UN PRODUCTO NUEVO' })
   create(@Body() body: CreateProductsDTO) {
     return this.productService.create(body);
   }
   @Put(':id')
+  @ApiOperation({ summary: 'EDITAR  UN PRODUCTO POR ID' })
   @HttpCode(HttpStatus.ACCEPTED) //  se pone el codigo de estado que  queramos
   update(
     @Param('id', ParseIntExamplePipe) id: number,
@@ -53,6 +56,7 @@ export class ProductsController {
     return this.productService.update(id, body);
   }
   @Put(':id/category/:categoryId')
+  @ApiOperation({ summary: 'AGREGAR  UNA CATEGORIA A UN PRODUCTO' })
   @HttpCode(HttpStatus.ACCEPTED) //  se pone el codigo de estado que  queramos
   updateCategories(
     @Param('id', ParseIntExamplePipe) id: number,
@@ -61,10 +65,12 @@ export class ProductsController {
     return this.productService.addCatedoryToProduct(id, categoryId);
   }
   @Delete(':id')
+  @ApiOperation({ summary: 'ELIMINAR UN PRODUCTO' })
   delete(@Param('id', ParseIntExamplePipe) id: number) {
     return this.productService.delete(id);
   }
   @Delete(':id/category/:categoryId')
+  @ApiOperation({ summary: 'ELIMINAR UNA CATEGORIA DE UN PRODUCTO' })
   deleteCategory(
     @Param('id', ParseIntExamplePipe) id: number, // pasa el Param a un number   estrictamente
     @Param('categoryId', ParseIntExamplePipe) categoryId: number, // pasa el Param a un number   estrictamente

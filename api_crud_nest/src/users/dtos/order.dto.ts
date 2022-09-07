@@ -6,6 +6,7 @@ export class CreateOrderDto {
   @IsPositive()
   @IsNotEmpty()
   @ApiProperty()
+  @ApiProperty({ description: 'ID DEL CLIENTE' })
   readonly customerId: number;
 }
 

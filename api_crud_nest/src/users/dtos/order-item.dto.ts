@@ -5,17 +5,17 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 export class CreateOrderItemDto {
   @IsPositive()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ description: 'ID DE LA ORDEN' })
   readonly orderId: number;
 
   @IsPositive()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ description: 'ID DEL PRODUCTO' })
   readonly productId: number;
 
   @IsPositive()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ description: 'CANTIDAD DE PRODUCTOS' })
   readonly quantity: number;
 }
 

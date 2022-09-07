@@ -53,17 +53,21 @@ export class UpdateAuthorDto extends PartialType(
 export class FilterProductsDto {
   @IsOptional()
   @IsPositive()
+  @ApiProperty({ description: 'LIMITE DE FILTRADO' })
   limit: number;
 
   @IsOptional()
   @Min(0)
+  @ApiProperty({ description: 'LIMITE DE FILTRADO' })
   offset: number;
 
   @IsOptional()
   @IsPositive()
+  @ApiProperty({ description: 'PRECIO MINIMO PARA FILTRAR' })
   minPrice: number;
 
   @ValidateIf((item) => item.minPrice) // DECORADOR  PARA  OBLIGAR QUE  SI PONE MIN PRICE  PONGA EL MAX PRICE
   @IsPositive()
+  @ApiProperty({ description: 'PRECIO MAXIMO PARA FILTRAR' })
   maxPrice: number;
 }

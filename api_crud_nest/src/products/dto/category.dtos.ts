@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { IsString, IsNotEmpty } from 'class-validator';
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ description: 'NOMBRE DE LA CATEGORIA' })
   readonly name: string;
 }
 
