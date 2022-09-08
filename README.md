@@ -24,6 +24,9 @@ ORM === object relacional model --- https://typeorm.io/
 1: COMANDO --- nest new nombreProyecto
 2: MANEJADOR DE PAQUETES --- npm --- preferiblemente
 
+DRIVER PARA USAR MONGO -- npm i mongodb
+TIPADO DEL M0NGO ---- npm i @types/mongodb -D
+
 # CORRER EL PROYECTO
 
 1: COMANDO --- npm run start
@@ -50,4 +53,4 @@ GLOBAL MODULE --- @Global()
 2:CREAR SERVICIO --- nest g s NOMBRESERVICIO
 3: CREAR PIPE --- nest g pipe NOMBREPIPE
 3: VALIDACIONES --- npm i class-validator class-transformer --- npm i @nestjs/mapped-types
-4: CREAR MODULO --- nest g mo NOMBRESERVICIO
+4: CREAR MODULO --- nest g mo NOMBREMODULO

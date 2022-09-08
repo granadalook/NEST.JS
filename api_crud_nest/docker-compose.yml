@@ -11,3 +11,13 @@ services:
       - 5434:5432
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:4.4
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: granada
+      MONGO_INITDB_ROOT_PASSWORD: granada
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo_data:/data/db

@@ -5,8 +5,22 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
+//import { MongoClient } from 'mongodb';
+import { MongoModule } from './database/mongo.module';
+
+/* const uri = 'mongodb://granada:granada@localhost:27017/?authMechanism=DEFAULT';
+
+const client = new MongoClient(uri);
+async function run() {
+  await client.connect();
+  const database = client.db('platzi-store');
+  const taskCollection = database.collection('tasks');
+  const tasks = await taskCollection.find().toArray();
+  console.log(tasks);
+}
+run(); */
 @Module({
-  imports: [UsersModule, ProductsModule, DatabaseModule],
+  imports: [UsersModule, ProductsModule, DatabaseModule, MongoModule], //modulos
   controllers: [AppController], //controladores
   providers: [AppService], // servicios
 })
