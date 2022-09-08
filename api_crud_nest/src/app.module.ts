@@ -7,6 +7,8 @@ import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 //import { MongoClient } from 'mongodb';
 import { MongoModule } from './database/mongo.module';
+import { ProducMongoModule } from './produc-mongo/produc-mongo.module';
+import { UserMongoModule } from './user-mongo/user-mongo.module';
 
 /* const uri = 'mongodb://granada:granada@localhost:27017/?authMechanism=DEFAULT';
 
@@ -20,7 +22,14 @@ async function run() {
 }
 run(); */
 @Module({
-  imports: [UsersModule, ProductsModule, DatabaseModule, MongoModule], //modulos
+  imports: [
+    UsersModule,
+    ProductsModule,
+    DatabaseModule,
+    MongoModule,
+    ProducMongoModule,
+    UserMongoModule,
+  ], //modulos
   controllers: [AppController], //controladores
   providers: [AppService], // servicios
 })

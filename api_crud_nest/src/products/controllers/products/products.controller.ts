@@ -12,7 +12,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ProductService } from '../../services/product/product.service';
-import { ParseIntExamplePipe } from '../../../common/parse-int-example.pipe';
+import { ParseIntExamplePipe } from '../../../common/parseInt/parse-int-example.pipe';
 import {
   CreateProductsDTO,
   FilterProductsDto,

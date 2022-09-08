@@ -26,6 +26,7 @@ ORM === object relacional model --- https://typeorm.io/
 
 DRIVER PARA USAR MONGO -- npm i mongodb
 TIPADO DEL M0NGO ---- npm i @types/mongodb -D
+PARA HACER VARIABLES DE ENTORNO --- npm i --save @nestjs/config
 
 # CORRER EL PROYECTO
 
