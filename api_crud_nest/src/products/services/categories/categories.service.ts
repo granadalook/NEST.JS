@@ -23,9 +23,9 @@ export class CategoriesService {
     const category = await this.categoryRepo.findOne({
       where: { id }, //   de esta manera le pido que en el get  me traiga estas dos relaciones
       relations: ['products'],
-    }); 
+    });
     if (!category) {
-      throw new NotFoundException(`Category #${id} not found`);
+      throw new NotFoundException(`CATEGORIA  ${id} NO EXISTE`);
     }
     return category;
   }
