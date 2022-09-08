@@ -10,7 +10,7 @@ export class CreateBrandDto {
 
   @IsUrl()
   @IsNotEmpty()
-  @ApiProperty({ description: 'IMAGEN DE FILTRADO' })
+  @ApiProperty({ description: 'IMAGEN DE LA MARCA' })
   readonly image: string;
 }
 

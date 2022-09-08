@@ -23,24 +23,24 @@ export class CreateProductsDTO {
   @IsString()
   readonly description: string;
 
-  @ApiProperty({ description: 'PRECIO DEL USUARIO' }) // DESCRIPCION PARA SWAGER
+  @ApiProperty({ description: 'PRECIO DEL PRODUCTO' }) // DESCRIPCION PARA SWAGER
   @IsNotEmpty()
   @IsNumber()
   readonly price: number;
-  @ApiProperty({ description: 'STOCK DEL USUARIO' })
+  @ApiProperty({ description: 'STOCK DEL PRODUCTO' })
   @IsNumber()
   @IsNotEmpty()
   readonly stock: number;
-  @ApiProperty({ description: 'IMAGEN DEL USUARIO' })
+  @ApiProperty({ description: 'IMAGEN DEL PRODUCTO' })
   @IsUrl()
   @IsNotEmpty()
   readonly image: string;
-  @ApiProperty({ description: 'RELACION DEL USUARIO' })
+  @ApiProperty({ description: 'MARCA DEL PRODUCTO' })
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
   readonly brandId: number;
-  @ApiProperty({ description: 'CATEGORIAS DEL USUARIO' })
+  @ApiProperty({ description: 'CATEGORIAS DEL PRODUCTO' })
   @IsArray()
   @IsNotEmpty()
   readonly categorysIds: number[];

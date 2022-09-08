@@ -27,7 +27,7 @@ export class CreateUserDto {
 
   @IsPositive()
   @IsOptional()
-  @ApiProperty({ description: 'customerId DEL USUARIO' })
+  @ApiProperty({ description: 'ID DE CLIENTE' })
   readonly customerId: number;  //  en el DTO  se pone la   relacion
 }
 
