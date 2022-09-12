@@ -38,6 +38,9 @@ export class ProductMongoService {
     const product = await (
       await this.productModel.findById(id).exec()
     ).toJSON();
+
+    product._id = product._id.toString();
+
     if (!product) {
       throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
     }

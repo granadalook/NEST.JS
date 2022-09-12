@@ -21,24 +21,26 @@ import {
   UpdateAuthorDto,
 } from '../../dto/products.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger'; // PARA DOCUMENTAR LOS ENDPOINST DE CADA GRUPO
-import { ApikeyGuard } from '../../../security/guards/apikey.guard';
+//import { ApikeyGuard } from '../../../security/guards/apikey.guard';
 import { Public } from '../../../security/decorators/public.decorator';
+import { JwtGuard } from '../../../security/guards/jwt.guard';
 
 @ApiTags('PRODUCTS')
-@UseGuards(ApikeyGuard) // DE ESTA MANERA   UTILIZAMOS LOS GUARDIANES  PARA  TODO EL CONTROLLADOR   Y TODOS LOS ENDPONIS
+@UseGuards(JwtGuard) //  DES  ESTA MANERA BLOQUEAMOS   TODO EL  CONTROLADOR   CON  JWT
+//@UseGuards(ApikeyGuard) // DE ESTA MANERA   UTILIZAMOS LOS GUARDIANES  PARA  TODO EL CONTROLLADOR   Y TODOS LOS ENDPONIS
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductService) {}
 
   @Get()
-  @UseGuards(ApikeyGuard)
+  @Public()
   @ApiOperation({ summary: 'LISTA DE PRODUCTOS CON QUERY PARAMS' }) // PARA  HACER DESCRIOCION DEL ENDPONIT
   getProducts(@Query() params: FilterProductsDto) {
     return this.productService.findAll(params);
   }
 
-  @UseGuards(ApikeyGuard) // DE ESTA MANERA   UTILIZAMOS LOS GUARDIANES
   @Get()
+  @Public() //  CON  ESTA ESTRATEGIA  HACEMOS  QUE ESTE METODO SEA PUBLICO
   @ApiOperation({ summary: 'TRAE LA LISTA DE LOS PRODUCTOS' }) // PARA  HACER DESCRIOCION DEL ENDPONIT
   get() {
     return this.productService.findAll();
@@ -51,7 +53,6 @@ export class ProductsController {
     return this.productService.findOnePro(productId);
   }
 
-  @Public()
   @Post()
   @ApiOperation({ summary: 'CREAR UN PRODUCTO NUEVO' })
   create(@Body() body: CreateProductsDTO) {

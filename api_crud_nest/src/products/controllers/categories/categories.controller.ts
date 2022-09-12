@@ -7,11 +7,15 @@ import {
   Put,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
+
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../../../security/guards/jwt.guard';
 import { CreateCategoryDto, UpdateCategoryDto } from '../../dto/category.dtos';
 import { CategoriesService } from '../../services/categories/categories.service';
 @ApiTags('CATEGORIAS') // DOCUMENTACION SWAGGER
+@UseGuards(JwtGuard) //  recibiir jwt
 @Controller('categories')
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
