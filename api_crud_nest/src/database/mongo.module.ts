@@ -18,7 +18,10 @@ import { MongooseModule } from '@nestjs/mongoose';
       useFactory: async () => {
         const uri =
           'mongodb://granada:granada@localhost:27017/?authMechanism=DEFAULT';
-        const client = new MongoClient(uri);
+        const client = new MongoClient(uri, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
         await client.connect();
         const database = client.db('platzi-store');
         return database;

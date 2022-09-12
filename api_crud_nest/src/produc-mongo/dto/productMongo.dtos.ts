@@ -8,13 +8,17 @@ import {
   IsOptional,
   Min,
   ValidateIf,
+  ValidateNested,
+  IsMongoId,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+
+import { CreateCategoryDto } from '../dto/categoryMongo.dtos';
 
 export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: `NOMBRE DEL PRODUCTO MONGO` })
+  @ApiProperty({ description: `product's name` })
   readonly name: string;
 
   @IsString()
@@ -37,9 +41,19 @@ export class CreateProductDto {
   @IsNotEmpty()
   @ApiProperty()
   readonly image: string;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @ApiProperty()
+  readonly category: CreateCategoryDto;
+
+  @IsNotEmpty()
+  @IsMongoId() // validacion de  que sea un mongo ID
+  readonly brand: string;
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
+
 export class FilterProductsDto {
   @IsOptional()
   @IsPositive()

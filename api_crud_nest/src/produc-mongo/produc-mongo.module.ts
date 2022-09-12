@@ -5,7 +5,7 @@ import { BrandMongoController } from './controllers/brand-mongo/brand-mongo.cont
 import { CategoryMongoController } from './controllers/category-mongo/category-mongo.controller';
 import { ProducMongoController } from './controllers/produc-mongo/produc-mongo.controller';
 import { Brand, BrandSchema } from './entities/brandMongo.entity';
-import { Product, ProductSchema } from './entities/product.entiti';
+import { Product, ProductSchema } from './entities/productMongo.entiti';
 import { BrandsMongoService } from './services/brands-mongo/brands-mongo.service';
 import { CategorysMongoService } from './services/categorys-mongo/categorys-mongo.service';
 import { ProductMongoService } from './services/product-mongo/product-mongo.service';

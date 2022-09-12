@@ -10,11 +10,11 @@ export class BrandsMongoService {
   constructor(@InjectModel(Brand.name) private brandModel: Model<Brand>) {}
 
   findAll() {
-    return this.brandModel.find().exec();
+    return this.brandModel.find().lean().exec();
   }
 
   async findOne(id: string) {
-    const product = await this.brandModel.findOne({ _id: id }).exec();
+    const product = await this.brandModel.findOne({ _id: id }).lean().exec();
     if (!product) {
       throw new NotFoundException(`Brand #${id} not found`);
     }

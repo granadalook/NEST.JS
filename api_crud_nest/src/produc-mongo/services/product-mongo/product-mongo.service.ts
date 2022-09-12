@@ -6,7 +6,7 @@ import {
   FilterProductsDto,
   UpdateProductDto,
 } from '../../dto/productMongo.dtos';
-import { Product } from '../../entities/product.entiti';
+import { Product } from '../../entities/productMongo.entiti';
 
 @Injectable()
 export class ProductMongoService {
@@ -23,9 +23,15 @@ export class ProductMongoService {
         filters.price = { $gte: minPrice, $lte: maxPrice }; //gte y lte  == mayor igual y menir e igual
         return this.productModel.find(filters).lean().exec();
       }
-      return this.productModel.find().skip(offset).limit(limit).lean().exec();
+      return this.productModel
+        .find()
+        .populate('brand')
+        .skip(offset)
+        .limit(limit)
+        .lean()
+        .exec();
     }
-    return this.productModel.find().lean().exec();
+    return this.productModel.find().populate('brand').lean().exec(); ///  con populate se resuelve la relacion  referenciada
   }
 
   async findOne(id: string) {

@@ -24,18 +24,14 @@ import {
 import { ProductMongoService } from '../../services/product-mongo/product-mongo.service';
 
 @ApiTags('PRODUCTS MONGO')
-@Controller('productsMongo')
+@Controller('productsmongo')
 export class ProducMongoController {
   constructor(private productsService: ProductMongoService) {}
 
   @Get()
+  @ApiOperation({ summary: 'TRAER TODOS LOS PRODUCTOS' })
   getProducts(@Query() params: FilterProductsDto) {
     return this.productsService.findAll(params);
-  }
-
-  @Get('filter')
-  getProductFilter() {
-    return `yo soy un filter`;
   }
 
   @Get(':productId')

@@ -14,7 +14,7 @@ import {
   UpdateCustomerDto,
 } from '../../dtos/customerMongo.dto';
 
-@Controller('customers')
+@Controller('customers-mongo')
 export class CustumersMongoController {
   constructor(private customersService: CustomerMongoService) {}
 

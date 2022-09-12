@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -7,18 +8,23 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { OrderMongoService } from '../../services/order-mongo/order-mongo.service';
-import { CreateOrderDto, UpdateOrderDto } from '../../dtos/orderMongo.dto';
+import {
+  AddProductsToOrderDto,
+  CreateOrderDto,
+  UpdateOrderDto,
+} from '../../dtos/orderMongo.dto';
 
-@ApiTags('orders')
-@Controller('orders')
+@ApiTags('ORDERS MONGO')
+@Controller('ordersmongo')
 export class OrdersMongoController {
   constructor(private ordersService: OrderMongoService) {}
 
   @Get()
-  findAll() {
+  @ApiOperation({ summary: 'TRAER TODOS LAS ORDENES' })
+  findAllone() {
     return this.ordersService.findAll();
   }
 
@@ -37,8 +43,23 @@ export class OrdersMongoController {
     return this.ordersService.update(id, payload);
   }
 
+  @Put(':id/products')
+  updateProducts(
+    @Param('id') id: string,
+    @Body() payload: AddProductsToOrderDto,
+  ) {
+    return this.ordersService.addProducts(id, payload.productsIds);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.ordersService.remove(id);
+  }
+  @Delete(':id/product/:productId')
+  removeProduct(
+    @Param('id') id: string,
+    @Param('productId') productId: string,
+  ) {
+    return this.ordersService.removeProduct(id, productId);
   }
 }
