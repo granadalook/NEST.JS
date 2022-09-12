@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  SetMetadata,
   UseGuards,
 } from '@nestjs/common';
 import { ProductService } from '../../services/product/product.service';
@@ -21,8 +22,10 @@ import {
 } from '../../dto/products.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger'; // PARA DOCUMENTAR LOS ENDPOINST DE CADA GRUPO
 import { ApikeyGuard } from '../../../security/guards/apikey.guard';
+import { Public } from '../../../security/decorators/public.decorator';
 
 @ApiTags('PRODUCTS')
+@UseGuards(ApikeyGuard) // DE ESTA MANERA   UTILIZAMOS LOS GUARDIANES  PARA  TODO EL CONTROLLADOR   Y TODOS LOS ENDPONIS
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductService) {}
@@ -41,11 +44,14 @@ export class ProductsController {
     return this.productService.findAll();
   }
 
+  @SetMetadata('isPublic', true) //  DE ESTA MANERA  HACEMOS  LA EXEPCION DE ESTE ENDPONIT
   @Get(':productId')
   @ApiOperation({ summary: 'TRAE PRODUCTOS POR ID' })
   getProduct(@Param('productId', ParseIntExamplePipe) productId: number) {
     return this.productService.findOnePro(productId);
   }
+
+  @Public()
   @Post()
   @ApiOperation({ summary: 'CREAR UN PRODUCTO NUEVO' })
   create(@Body() body: CreateProductsDTO) {
@@ -69,6 +75,7 @@ export class ProductsController {
   ) {
     return this.productService.addCatedoryToProduct(id, categoryId);
   }
+
   @Delete(':id')
   @ApiOperation({ summary: 'ELIMINAR UN PRODUCTO' })
   delete(@Param('id', ParseIntExamplePipe) id: number) {
