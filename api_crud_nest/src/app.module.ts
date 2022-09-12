@@ -9,6 +9,7 @@ import { DatabaseModule } from './database/database.module';
 import { MongoModule } from './database/mongo.module';
 import { ProducMongoModule } from './produc-mongo/produc-mongo.module';
 import { UserMongoModule } from './user-mongo/user-mongo.module';
+import { SecurityModule } from './security/security.module';
 
 /* const uri = 'mongodb://granada:granada@localhost:27017/?authMechanism=DEFAULT';
 
@@ -29,6 +30,7 @@ run(); */
     MongoModule,
     ProducMongoModule,
     UserMongoModule,
+    SecurityModule,
   ], //modulos
   controllers: [AppController], //controladores
   providers: [AppService], // servicios

@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from '../../services/product/product.service';
 import { ParseIntExamplePipe } from '../../../common/parseInt/parse-int-example.pipe';
@@ -19,6 +20,7 @@ import {
   UpdateAuthorDto,
 } from '../../dto/products.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger'; // PARA DOCUMENTAR LOS ENDPOINST DE CADA GRUPO
+import { ApikeyGuard } from '../../../security/guards/apikey.guard';
 
 @ApiTags('PRODUCTS')
 @Controller('products')
@@ -26,10 +28,13 @@ export class ProductsController {
   constructor(private productService: ProductService) {}
 
   @Get()
+  @UseGuards(ApikeyGuard)
   @ApiOperation({ summary: 'LISTA DE PRODUCTOS CON QUERY PARAMS' }) // PARA  HACER DESCRIOCION DEL ENDPONIT
   getProducts(@Query() params: FilterProductsDto) {
     return this.productService.findAll(params);
   }
+
+  @UseGuards(ApikeyGuard) // DE ESTA MANERA   UTILIZAMOS LOS GUARDIANES
   @Get()
   @ApiOperation({ summary: 'TRAE LA LISTA DE LOS PRODUCTOS' }) // PARA  HACER DESCRIOCION DEL ENDPONIT
   get() {
