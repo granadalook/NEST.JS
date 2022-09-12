@@ -24,9 +24,12 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger'; // PARA DOCUMENTAR LOS 
 //import { ApikeyGuard } from '../../../security/guards/apikey.guard';
 import { Public } from '../../../security/decorators/public.decorator';
 import { JwtGuard } from '../../../security/guards/jwt.guard';
+import { Roles } from '../../../security/decorators/roles.decorator';
+import { Role } from '../../../security/models/roles.model';
+import { RolesGuard } from '../../../security/guards/roles.guard';
 
 @ApiTags('PRODUCTS')
-@UseGuards(JwtGuard) //  DES  ESTA MANERA BLOQUEAMOS   TODO EL  CONTROLADOR   CON  JWT
+@UseGuards(JwtGuard, RolesGuard) //  DES  ESTA MANERA BLOQUEAMOS   TODO EL  CONTROLADOR   CON  JWT
 //@UseGuards(ApikeyGuard) // DE ESTA MANERA   UTILIZAMOS LOS GUARDIANES  PARA  TODO EL CONTROLLADOR   Y TODOS LOS ENDPONIS
 @Controller('products')
 export class ProductsController {
@@ -54,6 +57,7 @@ export class ProductsController {
   }
 
   @Post()
+  @Roles(Role.ADMIN) //  DE ESTA MANERA SOLO LE DAMOS ACCESO   AL METODO  SI ES DE ROL ADMINISTRADOR
   @ApiOperation({ summary: 'CREAR UN PRODUCTO NUEVO' })
   create(@Body() body: CreateProductsDTO) {
     return this.productService.create(body);
