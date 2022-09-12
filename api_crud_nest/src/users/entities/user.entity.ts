@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -19,6 +20,7 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   email: string;
 
+  @Exclude() // es mejor excluir de las respuestas los password  por seguridad
   @Column({ type: 'varchar', length: 255 })
   password: string; // encript
 

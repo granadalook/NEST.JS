@@ -27,5 +27,6 @@ import { OrderItemService } from './services/order-item/order-item.service';
     OrderItemController,
   ], // controladores
   providers: [CustomersService, UsersService, OrdersService, OrderItemService], // servicios
+  exports: [UsersService], //  exportamos user service para  ser utilizado en otros modulos
 })
 export class UsersModule {}

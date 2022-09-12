@@ -35,7 +35,9 @@ export class ProductMongoService {
   }
 
   async findOne(id: string) {
-    const product = await this.productModel.findById(id).lean().exec();
+    const product = await (
+      await this.productModel.findById(id).exec()
+    ).toJSON();
     if (!product) {
       throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
     }

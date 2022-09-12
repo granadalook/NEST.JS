@@ -3,6 +3,7 @@ import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client } from 'pg';
+import * as bcrypt from 'bcrypt'; // importacion de incriptacion
 
 import { User } from '../../entities/user.entity';
 //import { Order } from '../../entities/order.entity';
@@ -32,8 +33,14 @@ export class UsersService {
     return user;
   }
 
+  findByEmail(email: string) {
+    return this.userRepo.findOne({ where: { email } });
+  }
+
   async create(data: CreateUserDto) {
     const newUser = this.userRepo.create(data);
+    const incripPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = incripPassword;
     if (data.customerId) {
       //  aca validamos   que  viene la relacion
       const customer = await this.customersService.findOne(data.customerId); // con el servicio de customer   asignamos la data
