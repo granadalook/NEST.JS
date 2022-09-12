@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersService } from 'src/users/services/users/users.service';
 import { ProducMongoModule } from '../produc-mongo/produc-mongo.module';
 import { CustumersMongoController } from './controllers/custumers-mongo/custumers-mongo.controller';
 import { OrdersMongoController } from './controllers/orders-mongo/orders-mongo.controller';
@@ -36,6 +35,6 @@ import { UserMongoService } from './services/user-mongo/user-mongo.service';
     OrdersMongoController,
   ],
   providers: [CustomerMongoService, OrderMongoService, UserMongoService],
-  exports: [UsersService],
+  exports: [UserMongoService],
 })
 export class UserMongoModule {}

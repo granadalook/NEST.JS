@@ -55,5 +55,5 @@ GLOBAL MODULE --- @Global()
 3: CREAR PIPE --- nest g pipe NOMBREPIPE
 3: VALIDACIONES --- npm i class-validator class-transformer --- npm i @nestjs/mapped-types
 4: CREAR MODULO --- nest g mo NOMBREMODULO
-5:CREAR GUARDIAN ---  nest g gu  NOMBREGUARDIAN
+5:CREAR GUARDIAN --- nest g gu NOMBREGUARDIAN
 6: CREAR DECORADOR --- nest g d NOMBRE DECORADOR
