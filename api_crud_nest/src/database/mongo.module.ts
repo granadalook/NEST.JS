@@ -28,6 +28,6 @@ import { MongooseModule } from '@nestjs/mongoose';
       },
     },
   ],
-  exports: ['MONGO'],
+  exports: ['MONGO',MongooseModule],
 })
 export class MongoModule {}
