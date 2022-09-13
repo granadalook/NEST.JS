@@ -87,7 +87,6 @@ export class ProductService {
 
   async delete(id: number) {
     const productDelete = await this.findOnePro(id);
-    console.log('productDelete', productDelete);
     if (!productDelete) {
       throw new NotFoundException(`PRODUCTO DE ID ${id} NO EXIXTE`);
     }

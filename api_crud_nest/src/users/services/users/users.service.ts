@@ -55,8 +55,16 @@ export class UsersService {
     return this.userRepo.save(user);
   }
 
-  remove(id: number) {
-    return this.userRepo.delete(id);
+  async remove(id: number) {
+    const userDelete = await this.findOne(id);
+    if (!userDelete) {
+      throw new NotFoundException(`USUARIO DE ID ${id} NO EXIXTE`);
+    }
+    this.userRepo.delete(id);
+    return {
+      message: 'USUARIO ELIMINADO',
+      userDelete,
+    };
   }
 
   async getOrderByUser(id: number) {

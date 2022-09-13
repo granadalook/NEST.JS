@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { BrandsMongoService } from '../../services/brands-mongo/brands-mongo.service';
 import { CreateBrandDto, UpdateBrandDto } from '../../dto/brandMongo.dto';
 
-@ApiTags('brand-mongo')
+@ApiTags('BRAND-MONGO')
 @Controller('brand-mongo')
 export class BrandMongoController {
   constructor(private brandsService: BrandsMongoService) {}

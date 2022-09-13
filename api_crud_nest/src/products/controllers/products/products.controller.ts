@@ -10,7 +10,6 @@ import {
   Post,
   Put,
   Query,
-  SetMetadata,
   UseGuards,
 } from '@nestjs/common';
 import { ProductService } from '../../services/product/product.service';
@@ -49,8 +48,9 @@ export class ProductsController {
     return this.productService.findAll();
   }
 
-  @SetMetadata('isPublic', true) //  DE ESTA MANERA  HACEMOS  LA EXEPCION DE ESTE ENDPONIT
+  //@SetMetadata('isPublic', true) //  DE ESTA MANERA  HACEMOS  LA EXEPCION DE ESTE ENDPONIT
   @Get(':productId')
+  @Public()
   @ApiOperation({ summary: 'TRAE PRODUCTOS POR ID' })
   getProduct(@Param('productId', ParseIntExamplePipe) productId: number) {
     return this.productService.findOnePro(productId);

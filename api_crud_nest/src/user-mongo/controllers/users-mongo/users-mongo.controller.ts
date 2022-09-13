@@ -12,8 +12,8 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserMongoService } from '../../services/user-mongo/user-mongo.service';
 import { CreateUserDto, UpdateUserDto } from '../../dtos/userMongo.entity';
 
-@ApiTags('users')
-@Controller('users')
+@ApiTags('USERS-MONGO')
+@Controller('users-mongo')
 export class UsersMongoController {
   constructor(private usersService: UserMongoService) {}
 

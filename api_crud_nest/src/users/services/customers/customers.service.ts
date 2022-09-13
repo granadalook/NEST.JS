@@ -34,7 +34,15 @@ export class CustomersService {
     return this.customerRepo.save(customer);
   }
 
-  remove(id: number) {
-    return this.customerRepo.delete(id);
+  async remove(id: number) {
+    const custumerDelete = await this.findOne(id);
+    if (!custumerDelete) {
+      throw new NotFoundException(`CLIENTE ${id} NO EXISTE`);
+    }
+    this.customerRepo.delete(id);
+    return {
+      message: 'CLIENTE ELIMINADO',
+      custumerDelete,
+    };
   }
 }

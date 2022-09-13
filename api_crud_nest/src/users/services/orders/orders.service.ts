@@ -28,7 +28,7 @@ export class OrdersService {
       },
     });
     if (!order) {
-      throw new NotFoundException('not found');
+      throw new NotFoundException('ORDEN NO EXISTE');
     }
     return order;
   }
@@ -55,7 +55,15 @@ export class OrdersService {
     return this.orderRepo.save(order);
   }
 
-  remove(id: number) {
-    return this.orderRepo.delete(id);
+  async remove(id: number) {
+    const orderDelete = await this.findOne(id);
+    if (!orderDelete) {
+      throw new NotFoundException(`ORDEN DE ID ${id} NO EXIXTE`);
+    }
+    this.orderRepo.delete(id);
+    return {
+      message: 'ORDEN ELIMINADA',
+      orderDelete,
+    };
   }
 }

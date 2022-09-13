@@ -13,7 +13,9 @@ import {
   CreateCustomerDto,
   UpdateCustomerDto,
 } from '../../dtos/customerMongo.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('CUSTOMERS-MONGO')
 @Controller('customers-mongo')
 export class CustumersMongoController {
   constructor(private customersService: CustomerMongoService) {}

@@ -7,12 +7,19 @@ import {
   Put,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 
 import { UsersService } from '../../services/users/users.service';
 import { CreateUserDto, UpdateUserDto } from '../../dtos/user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../../../security/guards/jwt.guard';
+import { RolesGuard } from '../../../security/guards/roles.guard';
+import { Public } from '../../../security/decorators/public.decorator';
+import { Roles } from '../../../security/decorators/roles.decorator';
+import { Role } from '../../../security/models/roles.model';
 @ApiTags('USERS')
+@UseGuards(JwtGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -30,6 +37,7 @@ export class UsersController {
   }
 
   @Get(':id/orders')
+  @Roles(Role.ADMIN)
   @ApiOperation({
     summary: 'TRAE LOS USUARIOS  Y LAS ORDENES QUE TENGAN ASOCIADA',
   })
@@ -38,12 +46,14 @@ export class UsersController {
   }
 
   @Post()
+  @Public()
   @ApiOperation({ summary: 'CREA UN NUEVO USUARIO' })
   create(@Body() payload: CreateUserDto) {
     return this.usersService.create(payload);
   }
 
   @Put(':id')
+  @Roles(Role.USER, Role.ADMIN)
   @ApiOperation({ summary: 'EDITA UN USUARIO' })
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -53,8 +63,9 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'ELIMINA UN USUARIO POR ID' })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.remove(+id);
+    return this.usersService.remove(id);
   }
 }
