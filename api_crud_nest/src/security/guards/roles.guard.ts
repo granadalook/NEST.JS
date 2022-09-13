@@ -23,7 +23,7 @@ export class RolesGuard implements CanActivate {
     if (!roles) {
       return true;
     }
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest(); // de esta manera traemos  datos del request
     const user = request.user as PayloadToken;
     const isAuth = roles.some((role) => role === user.role);
     if (!isAuth) {

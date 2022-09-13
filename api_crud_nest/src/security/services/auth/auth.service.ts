@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PayloadToken } from 'src/security/models/token.model';
@@ -16,15 +16,14 @@ export class AuthService {
 
   async validateUser(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
-
-    if (user) {
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (isMatch) {
-        const { password, ...respuesta } = user;
-        return respuesta;
-      }
+    if (!user) {
+      throw new UnauthorizedException('EMAIL NO ENCONTRADO');
     }
-    return null;
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new UnauthorizedException('PASSWORD NO CONINCIDE');
+    }
+    return user;
   }
 
   generateJwt(user: User) {

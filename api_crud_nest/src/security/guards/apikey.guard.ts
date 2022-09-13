@@ -23,7 +23,7 @@ export class ApikeyGuard implements CanActivate {
     const header = request.header('auth'); //  clave valor del header
     const isAuth = header === '1234'; //  codigo de autenticacion valor del header
     if (!isAuth) {
-      throw new UnauthorizedException(' USUARIO NO PERMITIDO');
+      throw new UnauthorizedException(' USUARIO NO PERMITIDO HEADER');
     }
     return isAuth;
   }

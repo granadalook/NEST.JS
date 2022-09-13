@@ -12,13 +12,13 @@ import { Request } from 'express';
 import { User } from '../../../users/entities/user.entity';
 import { AuthService } from '../../services/auth/auth.service';
 
-@ApiTags('AUTENTICATION')
+@ApiTags('AUTENTICACION JWT')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(AuthGuard('local'))
-  @ApiOperation({ summary: 'LISTA DE PRODUCTOS CON QUERY PARAMS' })
+  @ApiOperation({ summary: 'GERERA UN JWT PARA USUARIO AUTENTICADO ' })
   @HttpCode(HttpStatus.ACCEPTED)
   @Post('login')
   login(@Req() req: Request) {

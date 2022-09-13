@@ -63,6 +63,7 @@ export class ProductsController {
     return this.productService.create(body);
   }
   @Put(':id')
+  @Roles(Role.SECRETARIO)
   @ApiOperation({ summary: 'EDITAR  UN PRODUCTO POR ID' })
   @HttpCode(HttpStatus.ACCEPTED) //  se pone el codigo de estado que  queramos
   update(
@@ -72,6 +73,7 @@ export class ProductsController {
     return this.productService.update(id, body);
   }
   @Put(':id/category/:categoryId')
+  @Roles(Role.SECRETARIO)
   @ApiOperation({ summary: 'AGREGAR  UNA CATEGORIA A UN PRODUCTO' })
   @HttpCode(HttpStatus.ACCEPTED) //  se pone el codigo de estado que  queramos
   updateCategories(
@@ -82,11 +84,13 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'ELIMINAR UN PRODUCTO' })
   delete(@Param('id', ParseIntExamplePipe) id: number) {
     return this.productService.delete(id);
   }
   @Delete(':id/category/:categoryId')
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'ELIMINAR UNA CATEGORIA DE UN PRODUCTO' })
   deleteCategory(
     @Param('id', ParseIntExamplePipe) id: number, // pasa el Param a un number   estrictamente
