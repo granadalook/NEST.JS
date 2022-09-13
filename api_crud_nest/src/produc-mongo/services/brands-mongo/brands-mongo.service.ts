@@ -3,7 +3,10 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Brand } from '../../entities/brandMongo.entity';
-import { CreateBrandDto, UpdateBrandDto } from '../../dto/brandMongo.dto';
+import {
+  CreateBrandMongoDto,
+  UpdateBrandMongoDto,
+} from '../../dto/brandMongo.dto';
 
 @Injectable()
 export class BrandsMongoService {
@@ -21,12 +24,12 @@ export class BrandsMongoService {
     return product;
   }
 
-  create(data: CreateBrandDto) {
+  create(data: CreateBrandMongoDto) {
     const newBrand = new this.brandModel(data);
     return newBrand.save();
   }
 
-  async update(id: string, changes: UpdateBrandDto) {
+  async update(id: string, changes: UpdateBrandMongoDto) {
     const product = await this.brandModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();

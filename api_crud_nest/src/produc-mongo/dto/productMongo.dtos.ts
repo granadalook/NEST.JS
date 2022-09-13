@@ -13,61 +13,66 @@ import {
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-import { CreateCategoryDto } from '../dto/categoryMongo.dtos';
+import { CreateCategoryMongoDto } from '../dto/categoryMongo.dtos';
 
-export class CreateProductDto {
+export class CreateProductMongoDto {
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: `product's name` })
+  @ApiProperty({ description: `NOMBRE DEL PRODUCTO` })
   readonly name: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ description: `DESCRIPCION DEL PRODUCTO` })
   readonly description: string;
 
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
-  @ApiProperty()
+  @ApiProperty({ description: `PRECIO DEL PRODUCTO` })
   readonly price: number;
 
   @IsNumber()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ description: `INVENTARIO DEL PRODUCTO` })
   readonly stock: number;
 
   @IsUrl()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ description: `IMAGEN DEL PRODUCTO` })
   readonly image: string;
 
   @IsNotEmpty()
   @ValidateNested()
-  @ApiProperty()
-  readonly category: CreateCategoryDto;
+  @ApiProperty({ description: `CATEGORIA DEL PRODUCTO` })
+  readonly category: CreateCategoryMongoDto;
 
   @IsNotEmpty()
   @IsMongoId() // validacion de  que sea un mongo ID
+  @ApiProperty({ description: `MARCA DEL PRODUCTO` })
   readonly brand: string;
 }
 
-export class UpdateProductDto extends PartialType(CreateProductDto) {}
+export class UpdateProductMongoDto extends PartialType(CreateProductMongoDto) {}
 
-export class FilterProductsDto {
+export class FilterProductsMongoDto {
   @IsOptional()
   @IsPositive()
+  @ApiProperty({ description: `LIMMIT DEL PRODUCTO` })
   limit: number;
 
   @IsOptional()
   @Min(0)
+  @ApiProperty({ description: `OFFSET DEL PRODUCTO` })
   offset: number;
 
   @IsOptional()
   @Min(0)
+  @ApiProperty({ description: `PRECIO MINIMO DEL PRODUCTO` })
   minPrice: number;
 
   @ValidateIf((params) => params.minPrice)
   @IsPositive()
+  @ApiProperty({ description: `PRECIO MAXIMO PRODUCTO` })
   maxPrice: number;
 }

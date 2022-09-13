@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, Inject } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { Model } from 'mongoose';
@@ -5,7 +6,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bycryp from 'bcrypt';
 
 import { User } from '../../entities/userMongo.entity';
-import { CreateUserDto, UpdateUserDto } from '../../dtos/userMongo.entity';
+import {
+  CreateUserMongoDto,
+  UpdateUserMongoDto,
+} from '../../dtos/userMongo.dto';
 import { ProductMongoService } from '../../../produc-mongo/services/product-mongo/product-mongo.service';
 
 @Injectable()
@@ -39,7 +43,7 @@ export class UserMongoService {
     };
   }
 
-  async create(data: CreateUserDto) {
+  async create(data: CreateUserMongoDto) {
     const newModel = new this.userModel(data);
     const hashPassword = await bycryp.hash(data.password, 10);
     newModel.password = hashPassword;
@@ -51,7 +55,7 @@ export class UserMongoService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  update(id: string, changes: UpdateUserDto) {
+  update(id: string, changes: UpdateUserMongoDto) {
     return this.userModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();

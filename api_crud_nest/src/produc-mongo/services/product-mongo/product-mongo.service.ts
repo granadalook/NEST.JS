@@ -2,9 +2,9 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import {
-  CreateProductDto,
-  FilterProductsDto,
-  UpdateProductDto,
+  CreateProductMongoDto,
+  FilterProductsMongoDto,
+  UpdateProductMongoDto,
 } from '../../dto/productMongo.dtos';
 import { Product } from '../../entities/productMongo.entiti';
 
@@ -14,7 +14,7 @@ export class ProductMongoService {
     @InjectModel(Product.name) private productModel: Model<Product>,
   ) {}
 
-  findAll(params?: FilterProductsDto) {
+  findAll(params?: FilterProductsMongoDto) {
     if (params) {
       const filters: FilterQuery<Product> = {};
       const { limit, offset } = params; // decosntruccion de javaScript
@@ -47,14 +47,14 @@ export class ProductMongoService {
     return product;
   }
 
-  create(data: CreateProductDto) {
+  create(data: CreateProductMongoDto) {
     const newProduct = new this.productModel(data);
     Logger.warn(newProduct.id);
     Logger.warn(typeof newProduct.id);
     return newProduct.save();
   }
 
-  update(id: string, changes: UpdateProductDto) {
+  update(id: string, changes: UpdateProductMongoDto) {
     const product = this.productModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();

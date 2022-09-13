@@ -1,15 +1,17 @@
 /* eslint-disable prettier/prettier */
 import { IsString, IsUrl, IsNotEmpty } from 'class-validator';
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-export class CreateBrandDto {
+export class CreateBrandMongoDto {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ description: `NOMBRE DE LA MARCA` })
   readonly name: string;
 
   @IsUrl()
   @IsNotEmpty()
+  @ApiProperty({ description: `IMAGEN DE LA MARCA` })
   readonly image: string;
 }
 
-export class UpdateBrandDto extends PartialType(CreateBrandDto) {}
+export class UpdateBrandMongoDto extends PartialType(CreateBrandMongoDto) {}

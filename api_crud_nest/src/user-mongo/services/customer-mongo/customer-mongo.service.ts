@@ -4,8 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Customer } from '../../entities/custumerMongo.entity';
 import {
-  CreateCustomerDto,
-  UpdateCustomerDto,
+  CreateCustomerMongoDto,
+  UpdateCustomerMongoDto,
 } from '../../dtos/customerMongo.dto';
 
 @Injectable()
@@ -22,12 +22,12 @@ export class CustomerMongoService {
     return this.customerModel.findById(id);
   }
 
-  create(data: CreateCustomerDto) {
+  create(data: CreateCustomerMongoDto) {
     const newModel = new this.customerModel(data);
     return newModel.save();
   }
 
-  update(id: string, changes: UpdateCustomerDto) {
+  update(id: string, changes: UpdateCustomerMongoDto) {
     return this.customerModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();

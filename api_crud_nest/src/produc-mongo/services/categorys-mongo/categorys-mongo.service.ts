@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Category } from '../../entities/categoryMongo.entity';
 import {
-  CreateCategoryDto,
-  UpdateCategoryDto,
+  CreateCategoryMongoDto,
+  UpdateCategoryMongoDto,
 } from '../../dto/categoryMongo.dtos';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class CategorysMongoService {
     return category;
   }
 
-  create(data: CreateCategoryDto) {
+  create(data: CreateCategoryMongoDto) {
     this.counterId = this.counterId + 1;
     const newCategory = {
       id: this.counterId,
@@ -38,7 +38,7 @@ export class CategorysMongoService {
     return newCategory;
   }
 
-  update(id: number, changes: UpdateCategoryDto) {
+  update(id: number, changes: UpdateCategoryMongoDto) {
     const category = this.findOne(id);
     const index = this.categories.findIndex((item) => item.id === id);
     this.categories[index] = {

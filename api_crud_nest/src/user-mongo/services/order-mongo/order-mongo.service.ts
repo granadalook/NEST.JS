@@ -3,7 +3,10 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Order } from '../../entities/orderMongo.entity';
-import { CreateOrderDto, UpdateOrderDto } from '../../dtos/orderMongo.dto';
+import {
+  CreateOrderMongoDto,
+  UpdateOrderMongoDto,
+} from '../../dtos/orderMongo.dto';
 
 @Injectable()
 export class OrderMongoService {
@@ -26,12 +29,12 @@ export class OrderMongoService {
     return order;
   }
 
-  create(data: CreateOrderDto) {
+  create(data: CreateOrderMongoDto) {
     const newModel = new this.orderModel(data);
     return newModel.save();
   }
 
-  update(id: string, changes: UpdateOrderDto) {
+  update(id: string, changes: UpdateOrderMongoDto) {
     return this.orderModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();

@@ -12,9 +12,9 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { OrderMongoService } from '../../services/order-mongo/order-mongo.service';
 import {
-  AddProductsToOrderDto,
-  CreateOrderDto,
-  UpdateOrderDto,
+  AddProductsToOrderMongoDto,
+  CreateOrderMongoDto,
+  UpdateOrderMongoDto,
 } from '../../dtos/orderMongo.dto';
 
 @ApiTags('ORDERS MONGO')
@@ -29,33 +29,39 @@ export class OrdersMongoController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'TRAER TODOS LAS ORDENES POR ID' })
   get(@Param('id') id: string) {
     return this.ordersService.findOne(id);
   }
 
   @Post()
-  create(@Body() payload: CreateOrderDto) {
+  @ApiOperation({ summary: 'CREAR ORDENES' })
+  create(@Body() payload: CreateOrderMongoDto) {
     return this.ordersService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: UpdateOrderDto) {
+  @ApiOperation({ summary: 'EDITAR  ORDENES' })
+  update(@Param('id') id: string, @Body() payload: UpdateOrderMongoDto) {
     return this.ordersService.update(id, payload);
   }
 
   @Put(':id/products')
+  @ApiOperation({ summary: 'EDITAR LOS PRODUCTOS DE LA ORDEN' })
   updateProducts(
     @Param('id') id: string,
-    @Body() payload: AddProductsToOrderDto,
+    @Body() payload: AddProductsToOrderMongoDto,
   ) {
     return this.ordersService.addProducts(id, payload.productsIds);
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'ELIMINA ORDEN' })
   remove(@Param('id') id: string) {
     return this.ordersService.remove(id);
   }
   @Delete(':id/product/:productId')
+  @ApiOperation({ summary: 'ELIMINA UN PRODUCTO DE LA ORDEN ' })
   removeProduct(
     @Param('id') id: string,
     @Param('productId') productId: string,

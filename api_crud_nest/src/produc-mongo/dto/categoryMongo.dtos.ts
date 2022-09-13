@@ -1,15 +1,19 @@
 /* eslint-disable prettier/prettier */
 import { IsString, IsNotEmpty, IsUrl } from 'class-validator';
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-export class CreateCategoryDto {
+export class CreateCategoryMongoDto {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ description: `NOMBRE CATEGORIA MONGO` })
   readonly name: string;
 
   @IsUrl()
   @IsNotEmpty()
+  @ApiProperty({ description: `URL IMAGEN CATEGORIA` })
   readonly image: string;
 }
 
-export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {}
+export class UpdateCategoryMongoDto extends PartialType(
+  CreateCategoryMongoDto,
+) {}
