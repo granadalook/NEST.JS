@@ -36,7 +36,6 @@ export class ProducMongoController {
 
   @Get(':productId')
   @ApiOperation({ summary: 'TRAER TODOS LOS PRODUCTOS POR ID' })
-  @HttpCode(HttpStatus.ACCEPTED)
   getOne(@Param('productId', MongoPipe) productId: string) {
     return this.productsService.findOne(productId);
   }
@@ -48,6 +47,7 @@ export class ProducMongoController {
   }
 
   @Put(':id')
+  @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({ summary: 'EDITAR  PRODUCTOS POR ID' })
   update(
     @Param('id', MongoPipe) id: string,

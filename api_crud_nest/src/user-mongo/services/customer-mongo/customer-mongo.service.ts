@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -14,26 +14,54 @@ export class CustomerMongoService {
     @InjectModel(Customer.name) private customerModel: Model<Customer>,
   ) {}
 
-  findAll() {
-    return this.customerModel.find().exec();
+  async findAll() {
+    const respuesta = await this.customerModel.find().lean().exec();
+    const id = respuesta.map((item) => item._id);
+    const idString = id.map((id) => id.toJSON());
+    return { message: { idString, respuesta } };
   }
 
   async findOne(id: string) {
-    return this.customerModel.findById(id);
+    const cliente = await this.customerModel.findOne({ _id: id }).lean().exec();
+
+    if (!cliente) {
+      throw new NotFoundException(`CLIENTE ${id} NO EXISTE`);
+    }
+    cliente._id = cliente._id.toString();
+    console.log('cliente._id', cliente._id);
+    console.log('cliente.id', cliente.id);
+    return cliente;
   }
 
-  create(data: CreateCustomerMongoDto) {
-    const newModel = new this.customerModel(data);
-    return newModel.save();
+  async create(data: CreateCustomerMongoDto) {
+    const newClient = await new this.customerModel(data);
+    newClient.save();
+    const client = newClient.toJSON();
+    client._id = client._id.toString();
+    return client;
   }
 
-  update(id: string, changes: UpdateCustomerMongoDto) {
-    return this.customerModel
+  async update(id: string, changes: UpdateCustomerMongoDto) {
+    const client = await this.customerModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .lean()
       .exec();
+    if (!client) {
+      throw new NotFoundException(`MARCA DE ${id} NO EXISTE`);
+    }
+    client._id = client._id.toString();
+    return client;
   }
 
-  remove(id: string) {
-    return this.customerModel.findByIdAndDelete(id);
+  async remove(id: string) {
+    const clientDelete = await this.customerModel
+      .findByIdAndDelete(id)
+      .lean()
+      .exec();
+    if (!clientDelete) {
+      throw new NotFoundException(`MARCA DE ${id} NO EXISTE`);
+    }
+    clientDelete._id = clientDelete._id.toString();
+    return clientDelete;
   }
 }

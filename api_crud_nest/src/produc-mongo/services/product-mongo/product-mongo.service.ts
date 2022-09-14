@@ -15,7 +15,6 @@ export class ProductMongoService {
   ) {}
 
   async findAll(params?: FilterProductsMongoDto) {
-    console.log('params', params);
     if (params) {
       const filters: FilterQuery<Product> = {};
       const { limit, offset, minPrice, maxPrice } = params; // decosntruccion de javaScript
@@ -26,17 +25,16 @@ export class ProductMongoService {
       }
       const ras = await this.productModel
         .find()
-        .populate('brand')
+        //.populate('brand')
         .skip(offset)
         .limit(limit)
         .lean()
         .exec();
-      console.log('ras', ras);
+
       return ras;
     }
-    const res = await this.productModel.find().populate('brand').lean().exec(); ///  con populate se resuelve la relacion  referenciada
-    console.log('res', res);
-    return res;
+
+    return await this.productModel.find().populate('brand').lean().exec(); ///  con populate se resuelve la relacion  referenciada
   }
 
   async findOne(id: string) {
@@ -47,6 +45,7 @@ export class ProductMongoService {
     if (!product) {
       throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
     }
+    product._id = product._id.toString();
     return product;
   }
 
@@ -78,6 +77,7 @@ export class ProductMongoService {
     if (!productDelete) {
       throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
     }
+    productDelete._id = productDelete._id.toString();
     return productDelete;
   }
 }

@@ -12,13 +12,17 @@ import {
 export class OrderMongoService {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
 
-  findAll() {
-    return this.orderModel
+  async findAll() {
+    const respuesta = await this.orderModel
       .find()
-      .populate('customer')
+      //.populate('customer')
       .populate('products')
       .lean()
       .exec();
+    const id = respuesta.map((item) => item._id);
+    const idString = id.map((id) => id.toJSON());
+
+    return { message: { idString, respuesta } };
   }
 
   findOne(id: string) {

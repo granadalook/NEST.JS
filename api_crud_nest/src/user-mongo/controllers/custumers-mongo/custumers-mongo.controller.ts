@@ -6,6 +6,8 @@ import {
   Body,
   Put,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 
 import { CustomerMongoService } from '../../services/customer-mongo/customer-mongo.service';
@@ -39,6 +41,7 @@ export class CustumersMongoController {
   }
 
   @Put(':id')
+  @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({ summary: 'EDITAR CLIENTES' })
   update(@Param('id') id: string, @Body() payload: UpdateCustomerMongoDto) {
     return this.customersService.update(id, payload);

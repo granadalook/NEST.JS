@@ -6,6 +6,8 @@ import {
   Body,
   Put,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -39,6 +41,7 @@ export class BrandMongoController {
   }
 
   @Put(':id')
+  @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({ summary: 'EDITA LAS MARCAS POR ID' })
   update(@Param('id') id: string, @Body() payload: UpdateBrandMongoDto) {
     return this.brandsService.update(id, payload);

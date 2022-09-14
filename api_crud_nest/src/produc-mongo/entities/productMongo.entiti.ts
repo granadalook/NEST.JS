@@ -1,11 +1,14 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+
 import { Document, Types } from 'mongoose';
 
 import { Brand } from '../entities/brandMongo.entity';
 
 @Schema()
 export class Product extends Document {
+  @Prop({ required: true, unique: true })
+  id: number;
   @Prop({ required: true })
   name: string;
 
