@@ -9,16 +9,16 @@ export class Product extends Document {
   @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop() // significa que va a hacer una propiedad
   description: string;
 
-  @Prop({ type: Number, index: true })  // indexacion
+  @Prop({ type: Number, index: true }) // indexacion
   price: number;
 
-  @Prop({ type: Number })
+  @Prop({ type: Number, required: true })
   stock: number;
 
-  @Prop()
+  @Prop({ unique: true })
   image: string;
 
   @Prop(
