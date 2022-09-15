@@ -10,12 +10,15 @@ import {
   ValidateIf,
   ValidateNested,
   IsMongoId,
+  // IsMongoId,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import { CreateCategoryMongoDto } from '../dto/categoryMongo.dtos';
 
 export class CreateProductMongoDto {
+  id: string;
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: `NOMBRE DEL PRODUCTO` })
@@ -39,11 +42,13 @@ export class CreateProductMongoDto {
 
   @IsUrl()
   @IsNotEmpty()
+  @IsOptional()
   @ApiProperty({ description: `IMAGEN DEL PRODUCTO` })
   readonly image: string;
 
   @IsNotEmpty()
   @ValidateNested()
+  @IsOptional()
   @ApiProperty({ description: `CATEGORIA DEL PRODUCTO` })
   readonly category: CreateCategoryMongoDto;
 

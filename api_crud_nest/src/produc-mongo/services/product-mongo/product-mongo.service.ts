@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model } from 'mongoose';
+import mongoose, { FilterQuery, Model } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 import {
   CreateProductMongoDto,
   FilterProductsMongoDto,
@@ -30,7 +32,9 @@ export class ProductMongoService {
         .limit(limit)
         .lean()
         .exec();
-
+      if (ras.length === 0) {
+        throw new NotFoundException(`NO EXISTEN PRODUCTOS`);
+      }
       return ras;
     }
 
@@ -38,46 +42,35 @@ export class ProductMongoService {
   }
 
   async findOne(id: string) {
-    const product = await (await this.productModel.findById(id)).toJSON();
-
-    product._id = product._id.toString();
-
+    const product = await this.productModel.findOne({ id: id }).lean();
     if (!product) {
       throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
     }
-    product._id = product._id.toString();
     return product;
   }
 
   async create(data: CreateProductMongoDto) {
+    data = { ...data, id: new mongoose.Types.ObjectId().toString() };
     const newProduct = await new this.productModel(data);
     newProduct.save();
     const product = newProduct.toJSON();
-    product._id = product._id.toString();
     return product;
   }
 
   async update(id: string, changes: UpdateProductMongoDto) {
-    const product = await this.productModel
-      .findByIdAndUpdate(id, { $set: changes }, { new: true })
-      .lean()
-      .exec();
-    if (!product) {
-      throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
-    }
-    product._id = product._id.toString();
-    return product;
+    const product = await this.findOne(id);
+    const updateProducts = await this.productModel
+      .findOneAndUpdate({ id: id }, changes, {
+        new: true,
+        upsert: true,
+      })
+      .lean();
+    return updateProducts;
   }
 
   async remove(id: string) {
-    const productDelete = await this.productModel
-      .findByIdAndDelete(id)
-      .lean()
-      .exec();
-    if (!productDelete) {
-      throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
-    }
-    productDelete._id = productDelete._id.toString();
-    return productDelete;
+    const product = await this.findOne(id);
+    const dele = await this.productModel.findOneAndDelete({ id: id });
+    return { message: { ELIMINADO: product } };
   }
 }

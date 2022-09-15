@@ -4,6 +4,9 @@ import { Document, Types } from 'mongoose';
 
 @Schema()
 export class Customer extends Document {
+  @Prop({ unique: true })
+  id: string;
+
   @Prop({ required: true })
   name: string;
 

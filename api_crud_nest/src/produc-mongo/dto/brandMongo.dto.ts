@@ -2,7 +2,9 @@
 import { IsString, IsUrl, IsNotEmpty } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
+
 export class CreateBrandMongoDto {
+  id: string;
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: `NOMBRE DE LA MARCA` })

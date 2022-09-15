@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Db } from 'mongodb';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bycryp from 'bcrypt';
 
@@ -26,11 +26,17 @@ export class UserMongoService {
 
   getTasks() {
     const tasksCollection = this.databaseMongo.collection('tasks');
-    return tasksCollection.find().toArray();
+    const tarea = tasksCollection.find().toArray();
+
+    return;
   }
 
   async findOne(id: string) {
-    return this.userModel.findById(id);
+    const user = await this.userModel.findOne({ id: id }).lean();
+    if (!user) {
+      throw new NotFoundException(`USUARIO ${id} NO EXISTE`);
+    }
+    return user;
   }
 
   async getOrdersByUser(userId: string) {
@@ -44,6 +50,7 @@ export class UserMongoService {
   }
 
   async create(data: CreateUserMongoDto) {
+    data = { ...data, id: new mongoose.Types.ObjectId().toString() };
     const newModel = new this.userModel(data);
     const hashPassword = await bycryp.hash(data.password, 10);
     newModel.password = hashPassword;
@@ -55,13 +62,20 @@ export class UserMongoService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  update(id: string, changes: UpdateUserMongoDto) {
-    return this.userModel
-      .findByIdAndUpdate(id, { $set: changes }, { new: true })
-      .exec();
+  async update(id: string, changes: UpdateUserMongoDto) {
+    const user = await this.findOne(id);
+    const updateUser = await this.userModel
+      .findOneAndUpdate({ id: id }, changes, {
+        new: true,
+        upsert: true,
+      })
+      .lean();
+    return updateUser;
   }
 
-  remove(id: string) {
-    return this.userModel.findByIdAndDelete(id);
+  async remove(id: string) {
+    const user = await this.findOne(id);
+    const dele = await this.userModel.findOneAndDelete({ id: id });
+    return { message: { ELIMINADO: user } };
   }
 }

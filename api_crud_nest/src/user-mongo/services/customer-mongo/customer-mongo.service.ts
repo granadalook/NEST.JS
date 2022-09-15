@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Customer } from '../../entities/custumerMongo.entity';
@@ -16,52 +17,40 @@ export class CustomerMongoService {
 
   async findAll() {
     const respuesta = await this.customerModel.find().lean().exec();
-    const id = respuesta.map((item) => item._id);
-    const idString = id.map((id) => id.toJSON());
-    return { message: { idString, respuesta } };
+
+    return respuesta;
   }
 
   async findOne(id: string) {
-    const cliente = await this.customerModel.findOne({ _id: id }).lean().exec();
-
-    if (!cliente) {
-      throw new NotFoundException(`CLIENTE ${id} NO EXISTE`);
+    const client = await this.customerModel.findOne({ id: id }).lean();
+    if (!client) {
+      throw new NotFoundException(`PRODUCTO ${id} NO EXISTE`);
     }
-    cliente._id = cliente._id.toString();
-    console.log('cliente._id', cliente._id);
-    console.log('cliente.id', cliente.id);
-    return cliente;
+    return client;
   }
 
   async create(data: CreateCustomerMongoDto) {
+    data = { ...data, id: new mongoose.Types.ObjectId().toString() };
     const newClient = await new this.customerModel(data);
     newClient.save();
-    const client = newClient.toJSON();
-    client._id = client._id.toString();
-    return client;
+    const Client = newClient.toJSON();
+    return Client;
   }
 
   async update(id: string, changes: UpdateCustomerMongoDto) {
-    const client = await this.customerModel
-      .findByIdAndUpdate(id, { $set: changes }, { new: true })
-      .lean()
-      .exec();
-    if (!client) {
-      throw new NotFoundException(`MARCA DE ${id} NO EXISTE`);
-    }
-    client._id = client._id.toString();
-    return client;
+    const client = await this.findOne(id);
+    const updateclient = await this.customerModel
+      .findOneAndUpdate({ id: id }, changes, {
+        new: true,
+        upsert: true,
+      })
+      .lean();
+    return updateclient;
   }
 
   async remove(id: string) {
-    const clientDelete = await this.customerModel
-      .findByIdAndDelete(id)
-      .lean()
-      .exec();
-    if (!clientDelete) {
-      throw new NotFoundException(`MARCA DE ${id} NO EXISTE`);
-    }
-    clientDelete._id = clientDelete._id.toString();
-    return clientDelete;
+    const client = await this.findOne(id);
+    const dele = await this.customerModel.findOneAndDelete({ id: id });
+    return { message: { ELIMINADO: client } };
   }
 }

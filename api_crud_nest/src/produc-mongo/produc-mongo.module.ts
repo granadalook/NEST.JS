@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import {
+  Category,
+  CategorySchema,
+} from '../produc-mongo/entities/categoryMongo.entity';
 import { BrandMongoController } from './controllers/brand-mongo/brand-mongo.controller';
 import { CategoryMongoController } from './controllers/category-mongo/category-mongo.controller';
 import { ProducMongoController } from './controllers/produc-mongo/produc-mongo.controller';
@@ -20,6 +24,10 @@ import { ProductMongoService } from './services/product-mongo/product-mongo.serv
       {
         name: Brand.name,
         schema: BrandSchema,
+      },
+      {
+        name: Category.name,
+        schema: CategorySchema,
       },
     ]),
   ],

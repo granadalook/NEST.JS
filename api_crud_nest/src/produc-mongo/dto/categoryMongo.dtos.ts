@@ -3,6 +3,8 @@ import { IsString, IsNotEmpty, IsUrl } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateCategoryMongoDto {
+  id: string;
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: `NOMBRE CATEGORIA MONGO` })

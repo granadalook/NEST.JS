@@ -9,6 +9,7 @@ import {
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateCustomerMongoDto {
+  id: string;
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: 'NOMBRE DEL CLIENTE' })

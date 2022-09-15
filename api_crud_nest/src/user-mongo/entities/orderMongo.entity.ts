@@ -6,6 +6,9 @@ import { Customer } from '../entities/custumerMongo.entity';
 
 @Schema()
 export class Order extends Document {
+  @Prop({ unique: true })
+  id: string;
+
   @Prop({ type: Date })
   date: Date;
 

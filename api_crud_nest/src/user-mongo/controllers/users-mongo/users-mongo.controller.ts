@@ -16,7 +16,7 @@ import {
 } from '../../dtos/userMongo.dto';
 
 @ApiTags('USERS-MONGO')
-@Controller('users-mongo')
+@Controller('usersmongo')
 export class UsersMongoController {
   constructor(private usersService: UserMongoService) {}
 

@@ -7,8 +7,9 @@ import { Brand } from '../entities/brandMongo.entity';
 
 @Schema()
 export class Product extends Document {
-  @Prop({ required: true, unique: true })
-  id: number;
+  @Prop({ unique: true })
+  id: string;
+
   @Prop({ required: true })
   name: string;
 

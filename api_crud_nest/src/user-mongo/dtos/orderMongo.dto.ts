@@ -3,6 +3,7 @@ import { IsMongoId, IsNotEmpty, IsDate, IsArray } from 'class-validator';
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
 export class CreateOrderMongoDto {
+  id: string;
   @IsNotEmpty()
   @IsMongoId()
   @ApiProperty({ description: `NOMBRE DEL CLIENTE PARA LA ORDEN` })

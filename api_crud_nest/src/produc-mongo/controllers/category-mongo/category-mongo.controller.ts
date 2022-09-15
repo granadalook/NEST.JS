@@ -6,7 +6,6 @@ import {
   Body,
   Put,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 
 import { CategorysMongoService } from '../../services/categorys-mongo/categorys-mongo.service';
@@ -15,8 +14,9 @@ import {
   UpdateCategoryMongoDto,
 } from '../../dto/categoryMongo.dtos';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { MongoPipe } from '../../../common/mongoPipe/mongo.pipe';
 @ApiTags('CATEGORIES-MONGO')
-@Controller('categories-mongo')
+@Controller('categoriesmongo')
 export class CategoryMongoController {
   constructor(private categoriesService: CategorysMongoService) {}
 
@@ -28,7 +28,7 @@ export class CategoryMongoController {
 
   @Get(':id')
   @ApiOperation({ summary: 'TRAE LAS CATEGORIAS POR ID' })
-  get(@Param('id', ParseIntPipe) id: number) {
+  get(@Param('id', MongoPipe) id: string) {
     return this.categoriesService.findOne(id);
   }
 
@@ -41,7 +41,7 @@ export class CategoryMongoController {
   @Put(':id')
   @ApiOperation({ summary: 'EDITA  CATEGORIAS POR ID' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', MongoPipe) id: string,
     @Body() payload: UpdateCategoryMongoDto,
   ) {
     return this.categoriesService.update(id, payload);
@@ -49,7 +49,7 @@ export class CategoryMongoController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'ELIMINA CATEGORIA POR ID' })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.remove(+id);
+  remove(@Param('id', MongoPipe) id: string) {
+    return this.categoriesService.remove(id);
   }
 }

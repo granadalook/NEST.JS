@@ -3,6 +3,7 @@ import { IsString, IsNotEmpty, IsEmail, Length } from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserMongoDto {
+  id: string;
   @IsString()
   @IsEmail()
   @ApiProperty({ description: 'EMAIL DE USUARIO' })
