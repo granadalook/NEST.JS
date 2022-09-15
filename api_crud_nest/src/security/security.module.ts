@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt/dist/jwt.module';
 import { PassportModule } from '@nestjs/passport';
+import { UserMongoModule } from '../user-mongo/user-mongo.module';
+
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './controllers/auth/auth.controller';
 import { AuthService } from './services/auth/auth.service';
@@ -11,6 +13,7 @@ import { LocalStrategy } from './strategies/local.strategy';
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   imports: [
+    UserMongoModule,
     UsersModule,
     PassportModule,
     JwtModule.register({

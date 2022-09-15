@@ -21,7 +21,7 @@ export class UserMongoService {
   ) {}
 
   findAll() {
-    return this.userModel.find().exec();
+    return this.userModel.find().lean().exec();
   }
 
   getTasks() {

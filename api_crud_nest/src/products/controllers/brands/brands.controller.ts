@@ -8,6 +8,8 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../../../security/decorators/roles.decorator';
@@ -47,6 +49,7 @@ export class BrandsController {
 
   @Put(':id')
   @Roles(Role.SECRETARIO, Role.ADMIN)
+  @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({ summary: 'EDITAR  UNA MARCA' })
   update(
     @Param('id', ParseIntPipe) id: number,
