@@ -8,8 +8,8 @@ export class ApiServiceService {
   findCharacter() {
     return lastValueFrom(
       this.httpService
-        .get(`https://rickandmortyapi.com/api/character/2`)
-        .pipe(map((res) => res.data)),
+        .get(`https://rickandmortyapi.com/api/character/3`)
+        .pipe(map((res) => res.data.name)),
     );
   }
 

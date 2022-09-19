@@ -14,18 +14,27 @@ import { Brand } from './entities/brand.entity';
 import { Category } from './entities/category.entity';
 import { ApiConetionModule } from '../api-conetion/api-conetion.module';
 import { ApiServiceService } from '../api-conetion/api-service/api-service.service';
+import { ApinamesController } from './controllers/apinames/apinames.controller';
+import { ApiNamesService } from './services/api-names/api-names.service';
+import { ApiName } from './entities/apinames.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, Brand, Category]),
+    TypeOrmModule.forFeature([Product, Brand, Category, ApiName]),
     ApiConetionModule,
   ], //  entidades
-  controllers: [ProductsController, CategoriesController, BrandsController], //controladores
+  controllers: [
+    ProductsController,
+    CategoriesController,
+    BrandsController,
+    ApinamesController,
+  ], //controladores
   providers: [
     ProductService,
     BrandsService,
     CategoriesService,
     ApiServiceService,
+    ApiNamesService,
   ], //servicios
   exports: [ProductService, TypeOrmModule], // exportaciones de servicios
 })
