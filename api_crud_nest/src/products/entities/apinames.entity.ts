@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,7 +13,8 @@ export class ApiName {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Index({ unique: true })
+  @Column({ type: 'varchar', length: 255 })
   name: string;
 
   @CreateDateColumn({
@@ -32,4 +34,7 @@ export class ApiName {
 
   @Column({ type: 'text' })
   nameSimp: string;
+
+  @Column({ type: 'text' })
+  nameMarvel: string;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateApiNamesDto } from '../../../products/dto/apinames.dto';
@@ -12,11 +13,16 @@ export class ApiNamesService {
     private apiConetionService: ApiServiceService,
   ) {}
 
-  async createApi(body: CreateApiNamesDto) {
+  async createApi(body: CreateApiNamesDto, params) {
     body.nameRick = await this.apiConetionService.findCharacter();
     const name = await this.apiConetionService.findSimsom();
     body.nameSimp = name.map((item) => item.character);
+    const marvel = await this.apiConetionService.findMarvel(params);
+    body.nameMarvel = marvel.data.results.map((item) => item.title);
     const newApi = this.apiNameRepo.create(body);
     return this.apiNameRepo.save(newApi);
+  }
+  async createMarvel(params) {
+    return await this.apiConetionService.findMarvel(params);
   }
 }
